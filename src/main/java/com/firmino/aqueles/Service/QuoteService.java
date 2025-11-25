@@ -5,6 +5,10 @@ import com.firmino.aqueles.Model.Quote;
 import com.firmino.aqueles.repository.QuoteRepository;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 
 
@@ -19,11 +23,14 @@ public class QuoteService {
 
     public Quote getTodayQuote(){
         LocalDate dateNow = LocalDate.now();
-        Quote savedQuote = ParseJson.toMap("todayQuote.json");
 
-        if (savedQuote.getChosenDate().equals(dateNow)){
-            return savedQuote;
+        if (Files.exists(Path.of("todayQuote.json"))){
+            Quote savedQuote = ParseJson.toMap("todayQuote.json");
+            if (savedQuote.getChosenDate().equals(dateNow)){
+                return savedQuote;
+            }
         }
+        
         Quote newQuote =  quoteRepository.findTop1ByOrderByChosenCountAsc();
         //updating transient field for local json
         newQuote.setChosenDate(LocalDate.now());
@@ -32,5 +39,6 @@ public class QuoteService {
         quoteRepository.save(newQuote);
         ParseJson.toJson(newQuote);
         return newQuote;
+
     }
 }

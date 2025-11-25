@@ -1,6 +1,5 @@
 package com.firmino.aqueles;
 
-import com.firmino.aqueles.Model.Quote;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
