@@ -30,7 +30,7 @@ public class QuoteService {
                 return savedQuote;
             }
         }
-        
+
         Quote newQuote =  quoteRepository.findTop1ByOrderByChosenCountAsc();
         //updating transient field for local json
         newQuote.setChosenDate(LocalDate.now());
