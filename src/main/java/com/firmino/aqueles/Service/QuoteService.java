@@ -3,10 +3,9 @@ package com.firmino.aqueles.Service;
 import com.firmino.aqueles.Helper.ParseJson;
 import com.firmino.aqueles.Model.Quote;
 import com.firmino.aqueles.repository.QuoteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -15,17 +14,20 @@ import java.time.LocalDate;
 @Service
 public class QuoteService {
 
-    private QuoteRepository quoteRepository;
+    private final QuoteRepository quoteRepository;
+    private final ParseJson parser;
 
-    public QuoteService(QuoteRepository quoteRepository){
+    @Autowired
+    public QuoteService(QuoteRepository quoteRepository,ParseJson parser){
         this.quoteRepository = quoteRepository;
+        this.parser = parser;
     }
 
     public Quote getTodayQuote(){
         LocalDate dateNow = LocalDate.now();
 
         if (Files.exists(Path.of("todayQuote.json"))){
-            Quote savedQuote = ParseJson.toMap("todayQuote.json");
+            Quote savedQuote = parser.toMap("todayQuote.json");
             if (savedQuote.getChosenDate().equals(dateNow)){
                 return savedQuote;
             }
@@ -37,7 +39,7 @@ public class QuoteService {
         //updating selected count
         newQuote.setChosenCount(newQuote.getChosenCount()+1);
         quoteRepository.save(newQuote);
-        ParseJson.toJson(newQuote);
+        parser.toJson(newQuote);
         return newQuote;
 
     }
