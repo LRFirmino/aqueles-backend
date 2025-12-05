@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.IOException;
 
+
 @Component
 public class ParseJson {
 
@@ -20,6 +21,7 @@ public class ParseJson {
 
     public Quote toMap(String filePath){
         try {
+            mapper.registerModule(new JavaTimeModule());
             return mapper.readValue(new File(filePath), Quote.class);
         }
 
