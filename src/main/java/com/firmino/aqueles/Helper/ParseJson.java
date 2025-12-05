@@ -15,7 +15,6 @@ public class ParseJson {
 
     private final ObjectMapper mapper;
 
-    @Autowired
     public ParseJson(ObjectMapper mapper) {
         this.mapper = mapper;
     }
