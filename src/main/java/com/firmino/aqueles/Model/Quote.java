@@ -3,11 +3,15 @@ package com.firmino.aqueles.Model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Data
 @Entity(name="quotes")
+@Getter
+@Setter
 public class Quote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
