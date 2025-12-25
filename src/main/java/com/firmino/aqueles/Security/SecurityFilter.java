@@ -36,11 +36,6 @@ public class SecurityFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 System.out.println("User authenticated: " + user.getUsername() + " with roles: " + user.getAuthorities());
             }
-            System.out.println("User NOT found in DB for login: ");
-            if (login != null){
-                System.out.println(login);
-                System.out.println("fodeu");
-            }
         }
         filterChain.doFilter(request, response);
     }
